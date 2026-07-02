@@ -14,7 +14,17 @@ with open(VECTOR_DIR / "metadata.pkl", "rb") as f:
     metadata = pickle.load(f)
 
 # Load embedding model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+model = None
+
+def get_model():
+    global model
+
+    if model is None:
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    return model
 
 print(f"Loaded {len(metadata)} assessments")
 
@@ -37,11 +47,11 @@ def search(query: str, top_k: int = 10):
     Search the SHL assessment catalog.
     """
 
-    # Convert query into embedding
-    query_embedding = model.encode(
-        [query],
-        convert_to_numpy=True
-    )
+   # Convert query into embedding
+    query_embedding = get_model().encode(
+    [query],
+    convert_to_numpy=True
+)
 
     # Normalize
     faiss.normalize_L2(query_embedding)
