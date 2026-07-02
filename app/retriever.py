@@ -96,3 +96,21 @@ if __name__ == "__main__":
         print("Name :", r["name"])
         print("Score:", round(r["score"], 3))
 
+def compare_assessments(name1: str, name2: str):
+    a1 = None
+    a2 = None
+
+    for item in metadata:
+        if name1.lower() in item["name"].lower():
+            a1 = item
+
+        if name2.lower() in item["name"].lower():
+            a2 = item
+
+    if not a1 or not a2:
+        return None
+
+    return {
+        "assessment_1": a1,
+        "assessment_2": a2
+    }

@@ -66,3 +66,15 @@ Assessments:
 
     return json.loads(response.text)
 
+def is_comparison_request(messages):
+    last = messages[-1]["content"].lower()
+
+    keywords = [
+        "compare",
+        "difference",
+        "vs",
+        "versus"
+    ]
+
+    return any(word in last for word in keywords)
+
